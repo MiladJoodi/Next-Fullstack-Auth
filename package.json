@@ -1,25 +1,15 @@
 {
-  "name": "next-fullstack-auth",
+  "name": "npms",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "lint": "eslint",
     "prisma:migrate": "prisma migrate dev",
     "prisma:studio": "prisma studio",
-    "lint": "eslint . --ext .ts,.tsx,.js,.jsx",
-    "format": "prettier --write .",
-    "prepare": "husky install"
-  },
-  "lint-staged": {
-    "*.{ts,tsx,js,jsx}": [
-      "eslint --fix",
-      "prettier --write"
-    ],
-    "*.{json,md}": [
-      "prettier --write"
-    ]
+    "prisma:generate": "prisma generate"
   },
   "dependencies": {
     "@prisma/client": "^6.15.0",
@@ -40,9 +30,6 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "15.5.2",
-    "husky": "^8.0.0",
-    "lint-staged": "^16.1.5",
-    "prettier": "^3.6.2",
     "prisma": "^6.15.0",
     "tailwindcss": "^4",
     "typescript": "^5"
