@@ -12,7 +12,7 @@ export default function Home() {
     <div className="min-h-screen flex flex-col bg-gradient-to-br from-blue-50 to-blue-200">
       {/* Navbar */}
       <header className="flex items-center justify-between px-8 py-4 bg-white/60 backdrop-blur-md shadow-sm sticky top-0 z-50">
-        <h1 className="text-2xl font-bold text-blue-800">Next Auth</h1>
+        <h1 className="md:block hidden text-2xl font-bold text-blue-800">Next Auth</h1>
         <div className="flex gap-4">
           <button
             onClick={() => router.push("/login")}
