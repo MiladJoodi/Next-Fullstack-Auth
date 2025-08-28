@@ -12,9 +12,11 @@
     "prisma:generate": "prisma generate"
   },
   "dependencies": {
+    "@hookform/resolvers": "^5.2.1",
     "@prisma/client": "^6.15.0",
     "argon2": "^0.44.0",
     "axios": "^1.11.0",
+    "cookie": "^1.0.2",
     "jose": "^6.0.13",
     "next": "15.5.2",
     "react": "19.1.0",

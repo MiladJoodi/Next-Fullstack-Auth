@@ -5,10 +5,12 @@ import argon2 from "argon2";
 export async function POST(req: NextRequest) {
 
     try {
-        const { email, password, name } = await req.json();
+        let { email, password, name } = await req.json();
         if (!email || !password) {
             return NextResponse.json({ error: "Email and password are required" }, { status: 400 });
         }
+
+        email = email.toLowerCase();
 
         // Not Existing User Logic
         const existingUser = await prisma.user.findUnique({ where: { email } });
