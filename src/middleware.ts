@@ -5,23 +5,38 @@ import { jwtVerify } from "jose";
 const secret = new TextEncoder().encode(process.env.JWT_SECRET as string);
 
 export async function middleware(req: NextRequest) {
-  const token = req.cookies.get("refreshToken")?.value;
+  const refreshToken = req.cookies.get("refreshToken")?.value;
+  const url = req.nextUrl.clone();
 
-  // اگر توکن وجود نداشت، رد می‌کنیم
-  if (!token) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  const isProtectedPage = url.pathname.startsWith("/dashboard");
+
+  if (!refreshToken) {
+    if (isProtectedPage) {
+      url.pathname = "/login";
+      return NextResponse.redirect(url);
+    }
+    return NextResponse.next();
   }
 
   try {
-    await jwtVerify(token, secret);
-    // اگر درست بود، ادامه مسیر
+    await jwtVerify(refreshToken, secret);
+
+    // اگر کاربر login هست و login/register رفته، redirect به dashboard
+    if (url.pathname === "/login" || url.pathname === "/register") {
+      url.pathname = "/dashboard";
+      return NextResponse.redirect(url);
+    }
+
     return NextResponse.next();
-  } catch (err) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  } catch {
+    if (isProtectedPage) {
+      url.pathname = "/login";
+      return NextResponse.redirect(url);
+    }
+    return NextResponse.next();
   }
 }
 
-// مسیرهایی که می‌خوای این middleware روی اونها اعمال بشه
 export const config = {
-  matcher: ["/api/private/:path*"],
+  matcher: ["/dashboard/:path*", "/login", "/register"],
 };
