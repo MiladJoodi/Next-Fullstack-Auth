@@ -19,13 +19,13 @@ export default function Home() {
         <div className="flex justify-center gap-4">
           <button
             onClick={() => router.push("/login")}
-            className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
+            className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition cursor-pointer"
           >
             Login
           </button>
           <button
             onClick={() => router.push("/register")}
-            className="px-6 py-3 bg-white text-blue-600 border border-blue-600 rounded-lg hover:bg-blue-50 transition"
+            className="px-6 py-3 bg-white text-blue-600 border border-blue-600 rounded-lg hover:bg-blue-50 transition cursor-pointer"
           >
             Register
           </button>
@@ -35,7 +35,7 @@ export default function Home() {
       {/* Illustration / Image */}
       <div className="mt-12 relative w-full max-w-lg h-80">
         <Image
-          src="/auth-illustration.png" // می‌تونی تصویر دلخواه جایگزین کنی
+          src="/auth-illustration.png"
           alt="Authentication Illustration"
           fill
           className="object-contain"
