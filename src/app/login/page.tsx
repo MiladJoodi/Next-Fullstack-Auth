@@ -6,6 +6,7 @@ import * as z from "zod";
 import { useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import { FaEnvelope, FaHome, FaLock } from "react-icons/fa";
 
 // اسکیمای ولیدیشن
 const loginSchema = z.object({
@@ -34,12 +35,9 @@ export default function LoginForm() {
         setErrorMsg("");
 
         try {
-            const res = await axios.post("/api/auth/login", data, { withCredentials: true });
+            await axios.post("/api/auth/login", data, { withCredentials: true });
 
-            // ریست فرم
             reset();
-
-            // redirect به داشبورد یا صفحه اصلی
             router.push("/dashboard");
         } catch (err: any) {
             setErrorMsg(err.response?.data?.error || "Something went wrong");
@@ -49,47 +47,83 @@ export default function LoginForm() {
     };
 
     return (
-        <div className="max-w-md mx-auto mt-12 p-6 border rounded-lg shadow-md bg-white">
-            <h2 className="text-2xl font-bold mb-6 text-center">Login</h2>
+        <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-blue-200 p-4">
+            <div className="w-full max-w-md bg-white p-8 rounded-xl shadow-lg">
+                <h2 className="text-3xl font-bold mb-6 text-center text-gray-800">
+                    Login
+                </h2>
 
-            <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-                <div>
-                    <label className="block mb-1 font-medium">Email</label>
-                    <input
-                        type="email"
-                        {...register("email")}
-                        className="w-full px-3 py-2 border rounded focus:outline-none focus:ring focus:border-blue-500"
-                    />
-                    {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>}
+                <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
+                    {/* Email */}
+                    <div>
+                        <label className="block mb-1 font-medium">Email</label>
+                        <div className="relative">
+                            <FaEnvelope className="absolute left-3 top-3 text-gray-400" />
+                            <input
+                                type="email"
+                                {...register("email")}
+                                className="w-full pl-10 pr-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-500"
+                            />
+                        </div>
+                        {errors.email && (
+                            <p className="text-red-500 text-sm mt-1">
+                                {errors.email.message}
+                            </p>
+                        )}
+                    </div>
+
+                    {/* Password */}
+                    <div>
+                        <label className="block mb-1 font-medium">Password</label>
+                        <div className="relative">
+                            <FaLock className="absolute left-3 top-3 text-gray-400" />
+                            <input
+                                type="password"
+                                {...register("password")}
+                                className="w-full pl-10 pr-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-500"
+                            />
+                        </div>
+                        {errors.password && (
+                            <p className="text-red-500 text-sm mt-1">
+                                {errors.password.message}
+                            </p>
+                        )}
+                    </div>
+
+                    {/* Button */}
+                    <button
+                        type="submit"
+                        disabled={loading}
+                        className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition cursor-pointer disabled:opacity-50"
+                    >
+                        {loading ? "Logging in..." : "Login"}
+                    </button>
+
+                    {errorMsg && (
+                        <p className="text-red-500 text-center mt-2">{errorMsg}</p>
+                    )}
+                </form>
+
+                <p className="mt-6 text-center text-gray-700">
+                    Don&apos;t have an account?{" "}
+                    <button
+                        onClick={() => router.push("/register")}
+                        className="text-blue-500 font-medium underline hover:text-blue-600 cursor-pointer"
+                    >
+                        Register
+                    </button>
+                </p>
+                
+                <div className="flex justify-center mt-4">
+                    <button
+                        onClick={() => router.push("/")}
+                        className="flex items-center gap-2 px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition cursor-pointer"
+                    >
+                        <FaHome className="text-gray-600" />
+                        Home
+                    </button>
                 </div>
-
-                <div>
-                    <label className="block mb-1 font-medium">Password</label>
-                    <input
-                        type="password"
-                        {...register("password")}
-                        className="w-full px-3 py-2 border rounded focus:outline-none focus:ring focus:border-blue-500"
-                    />
-                    {errors.password && <p className="text-red-500 text-sm mt-1">{errors.password.message}</p>}
-                </div>
-
-                <button
-                    type="submit"
-                    disabled={loading}
-                    className="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600 disabled:opacity-50 cursor-pointer"
-                >
-                    {loading ? "Logging in..." : "Login"}
-                </button>
-
-                {errorMsg && <p className="text-red-500 text-center mt-2">{errorMsg}</p>}
-            </form>
-
-            <p className="mt-4 text-center">
-                Don't have an account?{" "}
-                <button onClick={() => router.push("/register")} className="text-blue-500 underline hover:text-blue-600 cursor-pointer">
-                    Register
-                </button>
-            </p>
+            </div>
         </div>
     );
 }
