@@ -2,7 +2,6 @@ import { prisma } from "@/lib/prisma";
 import { NextRequest, NextResponse } from "next/server";
 import argon2 from "argon2";
 import { SignJWT } from "jose";
-import { serialize } from "cookie";
 
 
 const ACCESS_EXPIRES = "15m";

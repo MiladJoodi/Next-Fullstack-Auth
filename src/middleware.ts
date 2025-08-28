@@ -8,7 +8,8 @@ export async function middleware(req: NextRequest) {
   const refreshToken = req.cookies.get("refreshToken")?.value;
   const url = req.nextUrl.clone();
 
-  const isProtectedPage = url.pathname.startsWith("/dashboard");
+const isProtectedPage = url.pathname.startsWith("/dashboard");
+
 
   if (!refreshToken) {
     if (isProtectedPage) {
@@ -40,3 +41,4 @@ export async function middleware(req: NextRequest) {
 export const config = {
   matcher: ["/dashboard/:path*", "/login", "/register"],
 };
+
