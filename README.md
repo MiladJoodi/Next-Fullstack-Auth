@@ -44,7 +44,7 @@ This is a simple authentication system built with **Next.js 15 App Router**, **T
 ## Libraries & Tools Used
 
 - **Frontend:** Next.js 15, React, TypeScript, react-hook-form, Zod, axios
-- **Backend:** Next.js API routes, Prisma, PostgreSQL / MongoDB (or your preferred DB)
+- **Backend:** Next.js API routes, Prisma / MongoDB
 - **Security:** argon2 for password hashing, jose for JWT handling, HttpOnly cookies
 - **State & UI:** Tailwind CSS
 
